@@ -90,7 +90,11 @@ sub get_relay_dir_file_from_table($) {
   my $ret  = $sth->execute();
   my $href = $sth->fetchrow_hashref;
   if ( !defined($href) || !defined( $href->{Relay_log_name} ) ) {
-    return;
+
+    # gabocic - returning a "space" instead of "nothing" to prevent undefined variable error in MHA::Server::connect_and_get_status
+    my $relay_dir = " ";
+    my $relay_log_basename = " ";
+    return ( $relay_dir, $relay_log_basename );
   }
   my $current_relay_log_file = $href->{Relay_log_name};
   my $datadir = get_variable( $dbh, Get_Datadir_SQL );

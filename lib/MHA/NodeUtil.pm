@@ -191,6 +191,9 @@ sub check_manager_version {
 }
 
 sub parse_mysql_version($) {
+  ## gabocic - disabling warning for sprintf
+  no warnings 'redundant'
+
   my $str = shift;
   my $result = sprintf( '%03d%03d%03d', $str =~ m/(\d+)/g );
   return $result;
